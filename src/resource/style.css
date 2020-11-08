@@ -1,0 +1,12 @@
+#root {
+    -fx-background-color: lightblue;
+    -fx-background-image: url("image/rain-animation/frame_0_delay-0.06s.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 500 280;
+    -fx-background-position: center center;
+}
+
+#imageView {
+    -fx-alignment: center;
+
+}
