@@ -15,10 +15,6 @@ public class AudioPlayer extends AudioLibrary {
     private int currentTrack;
     private double currentVolume = 1.0;
 
-    public AudioPlayer() {
-
-    }
-
     /**
      * Create audio player for specific type and track number
      * 
@@ -123,6 +119,14 @@ public class AudioPlayer extends AudioLibrary {
 
     public void setPlaying(boolean play) {
         this.playing = play;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+    
+    public String getPath() {
+        return path;
     }
 
 }
