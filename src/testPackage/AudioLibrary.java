@@ -8,6 +8,7 @@ public class AudioLibrary {
 
     public final String AMBIENT = "src/resource/sound/ambient/";
     public final String MUSIC = "src/resource/sound/music/";
+    public final String VIDEO = "src/resource/video/";
     private List<String> audioList = new ArrayList<String>();
     private File folder;
     private String folderPath;
@@ -46,4 +47,3 @@ public class AudioLibrary {
     }
 
 }
-

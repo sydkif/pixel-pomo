@@ -3,17 +3,24 @@ package testPackage;
 import java.nio.file.Paths;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class AudioPlayer extends AudioLibrary {
 
-    private Media media;
-    private MediaPlayer player;
+    public Media media;
+    public MediaPlayer player;
+    public MediaView view;
     private AudioLibrary lib;
     private String path;
     private String type;
     private boolean playing;
     private int currentTrack;
     private double currentVolume = 1.0;
+
+    public AudioPlayer() {
+        type = null;
+        currentTrack = 0;
+    }
 
     /**
      * Create audio player for specific type and track number
@@ -27,7 +34,7 @@ public class AudioPlayer extends AudioLibrary {
     }
 
     /**
-     * Play audio method once.
+     * Play once.
      * 
      * After that will toggle between mute/ un-mute
      */
@@ -48,15 +55,35 @@ public class AudioPlayer extends AudioLibrary {
                 lib.setAudioFolder(lib.AMBIENT);
             } else if (getType() == "MUSIC") {
                 lib.setAudioFolder(lib.MUSIC);
-            } else { /** Default, incase of misspelled */
+            } else if (getType() == "VIDEO") {
+                lib.setAudioFolder(lib.VIDEO);
+            } else {
                 lib.setAudioFolder(lib.AMBIENT);
             }
 
             path = lib.selectAudio(getCurrentTrack());
+            // path src/resource/sound/ambient/1. Rain.mp3
             media = new Media(Paths.get(path).toUri().toString());
+            if (getType() == "VIDEO") {
+                view = new MediaView(player);
+            }
+            String test = Paths.get(path).toUri().toString();
+            System.out.println(test);
             player = new MediaPlayer(media);
             player.setCycleCount(-1);
             player.play();
+
+            if (getType() == "MUSIC") {
+                player.setOnEndOfMedia(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        nextTrack();
+                    }
+
+                });
+            }
+
             player.setVolume(currentVolume);
             System.out.println(" Track : " + (1 + currentTrack) + " / " + lib.getTrackList());
             setPlaying(true);
@@ -113,6 +140,10 @@ public class AudioPlayer extends AudioLibrary {
         return type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public boolean isPlaying() {
         return playing;
     }
@@ -121,13 +152,4 @@ public class AudioPlayer extends AudioLibrary {
         this.playing = play;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-    
-    public String getPath() {
-        return path;
-    }
-
 }
-

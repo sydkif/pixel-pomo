@@ -10,6 +10,14 @@
             "request": "launch",
             "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
             "mainClass": "testPackage.Main",
+            "projectName": "BIC20904-Project_bec5e758"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
+            "mainClass": "testPackage.Main",
             "projectName": "BIC20904-Project_50485f7"
         },
         {
@@ -17,6 +25,6 @@
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
+        }
     ]
 }
