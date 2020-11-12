@@ -55,18 +55,16 @@ public class AudioPlayer extends AudioLibrary {
                 lib.setAudioFolder(lib.AMBIENT);
             } else if (getType() == "MUSIC") {
                 lib.setAudioFolder(lib.MUSIC);
-            } else if (getType() == "VIDEO") {
-                lib.setAudioFolder(lib.VIDEO);
             } else {
                 lib.setAudioFolder(lib.AMBIENT);
             }
 
             path = lib.selectAudio(getCurrentTrack());
-            // path src/resource/sound/ambient/1. Rain.mp3
             media = new Media(Paths.get(path).toUri().toString());
             if (getType() == "VIDEO") {
                 view = new MediaView(player);
             }
+
             String test = Paths.get(path).toUri().toString();
             System.out.println(test);
             player = new MediaPlayer(media);

@@ -19,20 +19,23 @@ public class GUI extends Application {
 
     private static Pane root = new Pane();
     private static Scene scene = new Scene(root, 640, 360);
-    private static Slider ambVol = new Slider(0.0, 50, 50);
-    private static Slider mscVol = new Slider(0.0, 50, 50);
-    private static AudioPlayer ambient = new AudioPlayer("AMBIENT", 0);
-    private static AudioPlayer music = new AudioPlayer("MUSIC", 0);
+    private static Slider music_vol = new Slider(0.0, 100, 100);
+    private static Slider ambient_vol = new Slider(0.0, 100, 100);
     private static String STUDY = "src/resource/video/study.mp4";
     private static String RAIN = "src/resource/video/rain-study.mp4";
+    private static AudioPlayer music_player = new AudioPlayer("MUSIC", 0);
+    private static AudioPlayer ambient_player = new AudioPlayer("AMBIENT", 0);
     private static Media rain_clip = new Media(Paths.get(RAIN).toUri().toString());
     private static Media study_clip = new Media(Paths.get(STUDY).toUri().toString());
-    private static MediaPlayer video = new MediaPlayer(study_clip);
-    private static MediaView view = new MediaView(video);
-    private static  Button amb = new Button("Ambient");
-    private static  Button change = new Button("Change");
-    private static  Button msc = new Button("Music");
-    private static  Button next = new Button("Next");
+    private static MediaPlayer video_player = new MediaPlayer(study_clip);
+    private static MediaView view = new MediaView(video_player);
+    private static Button ambient_btn = new Button("Ambient");
+    private static Button change_btn = new Button("Change");
+    private static Button music_btn = new Button("Music");
+    private static Button next_btn = new Button("Next");
+    private static Button test_btn_1 = new Button("Test 1");
+    private static Button test_btn_2 = new Button("Test 2");
+    private static Button test_btn_3 = new Button("Test 3");
 
     @Override
     public void start(Stage stage) {
@@ -40,63 +43,89 @@ public class GUI extends Application {
     }
 
     public void initUI(Stage stage) {
-        video.setCycleCount(-1);
-        video.play();
-        next.setDisable(true);
-        change.setDisable(true);
 
-        mySlider(ambVol, 120, 55, Orientation.HORIZONTAL, ambient);
-        mySlider(mscVol, 120, 155, Orientation.HORIZONTAL, music);
+        // Initial setup
+        video_player.setCycleCount(-1);
+        next_btn.setDisable(true);
+        change_btn.setDisable(true);
 
-        amb.setId("Button");
-        amb.setLayoutX(25);
-        amb.setLayoutY(50);
-        amb.setPrefSize(80, 20);
-        amb.setOnAction((ActionEvent event) -> {
-            ambVol.setDisable(false);
-            ambient.play();
-            if (ambient.player.isMute())
+        // Simplified volume sliders creation
+        mySlider(ambient_vol, 120, 55, Orientation.HORIZONTAL, ambient_player);
+        mySlider(music_vol, 120, 155, Orientation.HORIZONTAL, music_player);
+
+        // Simplified buttons creation
+        myButton(ambient_btn, 25, 50, 80, 20, "glass-grey");
+        myButton(change_btn, 25, 80, 80, 20, "glass-grey");
+        myButton(music_btn, 25, 150, 80, 20, "glass-grey");
+        myButton(next_btn, 25, 180, 80, 20, "glass-grey");
+        myButton(test_btn_1, 25, 250, 80, 20, "bevel-grey");
+        myButton(test_btn_2, 25, 280, 80, 20, "bevel-grey");
+        myButton(test_btn_3, 25, 310, 80, 20, "bevel-grey");
+
+        // Ambient button event properties
+        ambient_btn.setOnAction((ActionEvent event) -> {
+
+            ambient_vol.setDisable(false);
+            ambient_player.play();
+            if (ambient_player.player.isMute()) {
                 changeVideo(2);
-            else
+            } else {
                 changeVideo(1);
-            video.setCycleCount(-1);
-            change.setDisable(false);
+            }
+            video_player.setCycleCount(-1);
+            change_btn.setDisable(false);
+
         });
 
-        change.setId("Button");
-        change.setLayoutX(25);
-        change.setLayoutY(80);
-        change.setPrefSize(80, 20);
-        change.setOnAction((ActionEvent event) -> {
+        // Change (Ambient) button event properties
+        change_btn.setOnAction((ActionEvent event) -> {
 
             System.out.println();
-            ambient.nextTrack();
+            ambient_player.nextTrack();
 
         });
 
-        msc.setId("Button");
-        msc.setLayoutX(25);
-        msc.setLayoutY(150);
-        msc.setPrefSize(80, 20);
-        msc.setOnAction((ActionEvent event) -> {
-            music.play();
-            mscVol.setDisable(false);
-            next.setDisable(false);
+        // Music button event properties
+        music_btn.setOnAction((ActionEvent event) -> {
+
+            video_player.play();
+            music_player.play();
+            music_vol.setDisable(false);
+            next_btn.setDisable(false);
 
         });
 
-        next.setId("Button");
-        next.setLayoutX(25);
-        next.setLayoutY(180);
-        next.setPrefSize(80, 20);
-        next.setOnAction((ActionEvent event) -> {
+        // Next (Music) button event properties
+        next_btn.setOnAction((ActionEvent event) -> {
+
             System.out.println();
-            music.nextTrack();
+            music_player.nextTrack();
 
         });
 
+        // Test button 1 event properties
+        test_btn_1.setOnAction((ActionEvent event) -> {
+            System.out.println("Test button 1 clicked!");
+
+        });
+
+        // Test button 2 event properties
+        test_btn_2.setOnAction((ActionEvent event) -> {
+            System.out.println("Test button 2 clicked!");
+
+        });
+
+        // Test button 3 event properties
+        test_btn_3.setOnAction((ActionEvent event) -> {
+            System.out.println("Test button 3 clicked!");
+
+        });
+
+        // Main window properties
         root.setId("root");
-        root.getChildren().addAll(view, msc, amb, change, next, ambVol, mscVol);
+        root.getChildren().addAll(view, ambient_vol, music_vol);
+        root.getChildren().addAll(music_btn, ambient_btn, change_btn, next_btn);
+        root.getChildren().addAll(test_btn_1, test_btn_2, test_btn_3);
         stage.setResizable(false);
         scene.getStylesheets().add("resource/style.css");
         stage.setTitle("no title yet");
@@ -105,46 +134,71 @@ public class GUI extends Application {
 
     }
 
+    /**
+     * Method to easily change background video clip
+     * 
+     * @param n A selector for which clip to play
+     */
     void changeVideo(int n) {
-        if (video.getStatus().toString() == "PLAYING") {
+        if (video_player.getStatus().toString() == "PLAYING") {
             System.out.println("Video will be stopped.");
-            video.stop();
+            video_player.stop();
             // root.getChildren().remove(view);
         }
         if (n == 1)
-            video = new MediaPlayer(rain_clip);
+            video_player = new MediaPlayer(rain_clip);
         if (n == 2)
-            video = new MediaPlayer(study_clip);
+            video_player = new MediaPlayer(study_clip);
 
-        view.setMediaPlayer(video);
-        video.play();
+        view.setMediaPlayer(video_player);
+        video_player.play();
     }
 
     /**
-     * Method to generate a volume slider for selected AudioPlayer.
+     * Method to simplify button creation with position, size and ID
      * 
-     * MUST be manually include into the Pane();
+     * Must be manually added into Pane().
      * 
-     * @param sliderName  Slider variable
-     * @param x           x-coordinate
-     * @param y           y-coordinate
-     * @param orientation Horizontal or Vertical
-     * @param playerName  AudioPlayer variable
+     * @param btnName : Button variable
+     * @param xc      : x-coordinate for button
+     * @param yc      : y-coordinate for button
+     * @param xd      : x-dimension for size
+     * @param yd      : y-dimension for size
+     * @param id      : Id for CSS styling
      */
-    void mySlider(Slider sliderName, double x, double y, Orientation orientation, AudioPlayer playerName) {
+    void myButton(Button btnName, double xc, double yc, double xd, double yd, String id) {
 
-        sliderName.valueProperty().addListener(new ChangeListener<Number>() {
+        btnName.setLayoutX(xc);
+        btnName.setLayoutY(yc);
+        btnName.setPrefSize(xd, yd);
+        btnName.setId(id);
+    }
+
+    /**
+     * Method to simplify volume slider creation for selected AudioPlayer.
+     * 
+     * Must be manually added into the Pane();
+     * 
+     * @param slider : Slider variable
+     * @param x      : x-coordinate
+     * @param y      : y-coordinate
+     * @param ori    : Set orientation to Horizontal or Vertical
+     * @param player : Selected AudioPlayer variable
+     */
+    void mySlider(Slider slider, double x, double y, Orientation ori, AudioPlayer player) {
+
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> obs, Number old, Number newValue) {
                 double newDouble = (double) newValue;
                 System.out.printf("\nVolume: %.0f%%", newDouble);
-                playerName.changeVolume(newDouble / 100);
+                player.changeVolume(newDouble / 100);
             }
         });
-        sliderName.setOrientation(orientation);
-        sliderName.setLayoutX(x);
-        sliderName.setLayoutY(y);
-        sliderName.setDisable(true);
+        slider.setOrientation(ori);
+        slider.setLayoutX(x);
+        slider.setLayoutY(y);
+        slider.setDisable(true);
     }
 
 }

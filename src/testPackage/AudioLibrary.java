@@ -8,14 +8,15 @@ public class AudioLibrary {
 
     public final String AMBIENT = "src/resource/sound/ambient/";
     public final String MUSIC = "src/resource/sound/music/";
-    public final String VIDEO = "src/resource/video/";
     private List<String> audioList = new ArrayList<String>();
     private File folder;
     private String folderPath;
     private int trackList;
 
     AudioLibrary() {
-
+        folder = null;
+        folderPath = null;
+        trackList = 0;
     }
 
     /**
@@ -26,7 +27,7 @@ public class AudioLibrary {
     public void setAudioFolder(String TYPE) {
         folderPath = TYPE;
         folder = new File(folderPath);
-        String[]audio = folder.list();
+        String[] audio = folder.list();
         for (String fileName : audio) {
             audioList.add(folderPath + fileName);
         }
