@@ -1,21 +1,131 @@
-/* Example taken from : http://fxexperience.com/2011/12/styling-fx-buttons-with-css/ */
-#bevel-grey {
-    -fx-background-color: 
-        linear-gradient(#f2f2f2, #d6d6d6),
-        linear-gradient(#fcfcfc 0%, #d9d9d9 20%, #d6d6d6 100%),
-        linear-gradient(#dddddd 0%, #f6f6f6 50%);
-    -fx-background-radius: 8,7,6;
-    -fx-background-insets: 0,1,2;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+#root {
+    -fx-background-color: rgb(44, 44, 44);
 }
-#glass-grey {
-    -fx-background-color: 
-        #c3c4c4,
-        linear-gradient(#d6d6d6 50%, white 100%),
-        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
-    -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
-    -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+
+#view {
+    -fx-effect: innershadow(three-pass-box, rgb(44, 44, 44), 127, 0.7, 0, 0);
+}
+
+#label-clock {
+    -fx-text-fill        : black;
+    -fx-padding          : 4px;
+    -fx-font-family      : "Courier New";
+    -fx-font-size        : 25px;
+    -fx-background-color : rgb(88, 88, 88);
+    -fx-background-size  : 40px;
+    -fx-background-radius: 12px;
+}
+
+#label-music {
+    -fx-text-fill        : black;
+    -fx-padding          : 4px;
+    -fx-font-family      : "Segoe UI Semibold";
+    -fx-font-size        : 25px;
+    -fx-background-color : rgb(88, 88, 88);
+    -fx-background-size  : 40px;
+    -fx-background-radius: 12px;
+}
+
+#button-ambient {
+    -fx-background-color   : rgb(88, 88, 88);
+    -fx-background-image   : url('icon/rain.png');
+    -fx-background-size    : 24px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-background-radius  : 12px;
+}
+
+#button-ambient:hover {
+    -fx-background-color: rgb(77, 77, 77);
+}
+
+#button-music {
+    -fx-background-color   : rgb(88, 88, 88);
+    -fx-background-image   : url('icon/music.png');
+    -fx-background-size    : 20px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-background-radius  : 12px;
+}
+
+#button-music:hover {
+    -fx-background-color: rgb(77, 77, 77);
+}
+
+#button-next {
+    -fx-background-color   : rgb(88, 88, 88);
+    -fx-background-image   : url('icon/next.png');
+    -fx-background-size    : 16px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 60%;
+    -fx-background-radius  : 10px;
+}
+
+#button-next:pressed {
+    -fx-opacity: 0.5;
+}
+
+#button-next:hover {
+    -fx-background-color: rgb(77, 77, 77);
+}
+
+#button-clock {
+    -fx-background-color   : rgb(88, 88, 88);
+    -fx-background-image   : url('icon/clock.png');
+    -fx-background-size    : 24px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-background-radius  : 12px;
+}
+
+#button-clock:hover {
+    -fx-opacity: 0.8;
+}
+
+#button-clock:pressed {
+    -fx-opacity: 0.5;
+}
+
+#button-task {
+    -fx-background-color   : rgb(88, 88, 88);
+    -fx-background-image   : url('icon/task.png');
+    -fx-background-size    : 24px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-background-radius  : 12px;
+}
+
+#button-task:hover {
+    -fx-opacity: 0.8;
+}
+
+#button-confirm {
+    -fx-font-family     : "Arial Black";
+    -fx-font-size       : 18;
+    -fx-text-fill       : white;
+    -fx-background-color: rgb(120, 180, 200);
+}
+
+#button-confirm:hover {
+    -fx-background-color: rgb(140, 190, 210);
+}
+
+#button-confirm:pressed {
+    -fx-background-color: rgb(100, 180, 210);
+}
+
+#my-slider .thumb {
+    -fx-background-color: rgb(88, 88, 88);
+}
+
+#my-slider .track {
+    -fx-background-color: rgb(100, 100, 100);
+}
+
+#my-slider:hover .thumb {
+    -fx-background-color: rgb(77, 77, 77);
+}
+
+#checkbox .box .mark {
+    -fx-padding: 10px;
 }

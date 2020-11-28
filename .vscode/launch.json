@@ -9,6 +9,29 @@
             "name": "CodeLens (Launch) - Main",
             "request": "launch",
             "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
+            "mainClass": "test2Package.Main",
+            "projectName": "BIC20904-Project_50485f7"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test",
+            "request": "launch",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
+            "mainClass": "testPackage.test",
+            "projectName": "BIC20904-Project_50485f7"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - stopwatch",
+            "request": "launch",
+            "mainClass": "testPackage.stopwatch",
+            "projectName": "BIC20904-Project_50485f7"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
             "mainClass": "testPackage.Main",
             "projectName": "BIC20904-Project_bec5e758"
         },
