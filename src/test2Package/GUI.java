@@ -42,7 +42,7 @@ public class GUI extends Application {
     private TaskPaper task = new TaskPaper();
     private Button[] button = new Button[10];
     private Slider[] slider = new Slider[2];
-    private Label[] label = new Label[2];
+    private Label[] label = new Label[3];
     private CheckBox checkBox = new CheckBox();
     private TextField textField = new TextField();
     private Spinner<Integer> spinner = new Spinner<Integer>(1, 120, 1);
@@ -69,38 +69,12 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
 
-        // TASK PAPER PROPERTIES
-        FileInputStream stream = null;
-        try {
-            stream = new FileInputStream("src/resource/image/task-paper-clone.png");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        image = new Image(stream);
-        imageView = new ImageView(image);
-        imageView.setLayoutX(209);
-        imageView.setLayoutY(70);
-
-        textField.setPrefSize(280, 36);
-        textField.setLayoutX(255);
-        textField.setLayoutY(250);
-        textField.setRotate(-3.5);
-
-        spinner.setPrefSize(80, 36);
-        spinner.setLayoutX(455);
-        spinner.setLayoutY(300);
-        spinner.setRotate(-3.5);
-
-        checkBox.setLayoutX(500);
-        checkBox.setLayoutY(350);
-        checkBox.setRotate(-3.5);
-        checkBox.setId("checkbox");
-
         // ADD LABELS
         for (int x = 0; x < label.length; x++)
             label[x] = new Label();
         addLabel(label[0], 710, 25, 60, "label-clock");
-        addLabel(label[1], 25, 500, 60, "label-music");
+        addLabel(label[1], 25, 535, 60, "label-music");
+        addLabel(label[2], 25, 460, 60, "label-music");
 
         // ADD VOLUME SLIDERS
         for (int x = 0; x < slider.length; x++)
@@ -165,7 +139,7 @@ public class GUI extends Application {
 
         // TASK BUTTON
         button[4].setOnAction((ActionEvent event) -> {
-
+            textField.setText("Activity"); // Default
             if (toggle) {
                 root.getChildren().removeAll(imageView, button[5], textField, spinner, checkBox);
                 toggle = false;
@@ -182,7 +156,10 @@ public class GUI extends Application {
             task.setLabel(textField.getText());
             task.setDuration(spinner.getValue());
             task.setAlarmOn(checkBox.isSelected());
-            // sysout for testing
+            label[2].setText(task.getLabel() + ", " + task.getDuration() + " minute(s)");
+
+            // TODO Add start timer
+
             System.out.println();
             System.out.println("Task Label\t: " + task.getLabel());
             System.out.println("Task Duration\t: " + task.getDuration() + " min");
@@ -193,7 +170,36 @@ public class GUI extends Application {
         });
         root.getChildren().remove(button[5]);
 
-        // UPDATE CLOCK AND MUSIC TITLE
+        // TASK PAPER PROPERTIES
+        FileInputStream stream = null;
+        try {
+            stream = new FileInputStream("src/resource/image/task-paper-clone.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        image = new Image(stream);
+        imageView = new ImageView(image);
+        imageView.setLayoutX(209);
+        imageView.setLayoutY(70);
+
+        textField.setPrefSize(280, 36);
+        textField.setLayoutX(255);
+        textField.setLayoutY(250);
+        textField.setRotate(-3.5);
+
+        spinner.setPrefSize(80, 36);
+        spinner.setLayoutX(455);
+        spinner.setLayoutY(300);
+        spinner.setRotate(-3.5);
+
+        checkBox.setLayoutX(500);
+        checkBox.setLayoutY(350);
+        checkBox.setRotate(-3.5);
+        checkBox.setId("checkbox");
+
+        // UPDATE LABELS
+        label[1].setText("Music Title");
+        label[2].setText("Task, Duration");
         Thread timerThread = new Thread(() -> {
             while (true) {
                 try {
