@@ -79,6 +79,10 @@ public class AudioPlayer extends MediaLibrary {
         play();
     }
 
+    public String title() {
+        return (String) media.getMetadata().get("title");
+    }
+
     public void setMediaType(int mediaType) {
         this.mediaType = mediaType;
     }

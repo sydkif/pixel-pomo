@@ -99,6 +99,10 @@
     -fx-opacity: 0.8;
 }
 
+#button-task:pressed {
+    -fx-opacity: 0.5;
+}
+
 #button-confirm {
     -fx-font-family     : "Arial Black";
     -fx-font-size       : 18;

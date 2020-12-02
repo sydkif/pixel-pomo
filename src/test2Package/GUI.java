@@ -1,5 +1,7 @@
 package test2Package;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,8 +14,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -32,10 +39,17 @@ public class GUI extends Application {
     private VideoPlayer normal = new VideoPlayer(VIDEO, VideoPlayer.NORMAL);
     private VideoPlayer rain = new VideoPlayer(VIDEO, VideoPlayer.RAIN);
     private MediaView view = new MediaView();
+    private TaskPaper task = new TaskPaper();
     private Button[] button = new Button[10];
     private Slider[] slider = new Slider[2];
     private Label[] label = new Label[2];
+    private CheckBox checkBox = new CheckBox();
+    private TextField textField = new TextField();
+    private Spinner<Integer> spinner = new Spinner<Integer>(1, 120, 1);
     private boolean timeFormat;
+    private boolean toggle;
+    private Image image;
+    private ImageView imageView;
 
     public void initUI(Stage stage) {
 
@@ -55,29 +69,38 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
 
+        // TASK PAPER PROPERTIES
+        FileInputStream stream = null;
+        try {
+            stream = new FileInputStream("src/resource/image/task-paper-clone.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        image = new Image(stream);
+        imageView = new ImageView(image);
+        imageView.setLayoutX(209);
+        imageView.setLayoutY(70);
+
+        textField.setPrefSize(280, 36);
+        textField.setLayoutX(255);
+        textField.setLayoutY(250);
+        textField.setRotate(-3.5);
+
+        spinner.setPrefSize(80, 36);
+        spinner.setLayoutX(455);
+        spinner.setLayoutY(300);
+        spinner.setRotate(-3.5);
+
+        checkBox.setLayoutX(500);
+        checkBox.setLayoutY(350);
+        checkBox.setRotate(-3.5);
+        checkBox.setId("checkbox");
+
         // ADD LABELS
         for (int x = 0; x < label.length; x++)
             label[x] = new Label();
         addLabel(label[0], 710, 25, 60, "label-clock");
         addLabel(label[1], 25, 500, 60, "label-music");
-
-        // UPDATE CLOCK AND MUSIC TITLE
-        Thread timerThread = new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(100); // 0.1 second
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Platform.runLater(() -> {
-                    label[0].setText(LocalTime.now().format(dtf));
-                    if (music.isPlaying()) {
-                        label[1].setText((String) music.media.getMetadata().get("title"));
-                    }
-                });
-            }
-        });
-        timerThread.start();
 
         // ADD VOLUME SLIDERS
         for (int x = 0; x < slider.length; x++)
@@ -93,12 +116,10 @@ public class GUI extends Application {
         addButton(button[2], 25, 114, 40, 10, "button-next");
         addButton(button[3], 670, 25, 38, 38, "button-clock");
         addButton(button[4], 25, 280, 40, 40, "button-task");
+        addButton(button[5], 305, 425, 200, 48, "button-confirm");
 
+        // AMBIENT BUTTON
         button[0].setOpacity(0.5);
-        button[1].setOpacity(0.5);
-        button[2].setDisable(true);
-
-        // AMBIENT BUTTON ON CLICK EVENT
         button[0].setOnAction((ActionEvent event) -> {
             slider[0].setDisable(false);
             ambient.play();
@@ -109,10 +130,10 @@ public class GUI extends Application {
                 view.setMediaPlayer(rain.player);
                 button[0].setOpacity(1);
             }
-
         });
 
-        // MUSIC BUTTON ON CLICK EVENT
+        // MUSIC BUTTON
+        button[1].setOpacity(0.5);
         button[1].setOnAction((ActionEvent event) -> {
             slider[1].setDisable(false);
             button[2].setDisable(false);
@@ -124,12 +145,14 @@ public class GUI extends Application {
             }
         });
 
-        // NEXT BUTTON ON CLICK EVENT
+        // NEXT BUTTON
+        button[2].setDisable(true);
         button[2].setOnAction((ActionEvent event) -> {
             music.next();
+            button[1].setOpacity(1);
         });
 
-        // CLOCK BUTTON ON CLICK EVENT
+        // CLOCK BUTTON
         button[3].setOnAction((ActionEvent event) -> {
             if (timeFormat) {
                 dtf = DateTimeFormatter.ofPattern("HH:mm");
@@ -140,10 +163,53 @@ public class GUI extends Application {
             }
         });
 
-        // TASK BUTTON ON CLICK EVENT
+        // TASK BUTTON
         button[4].setOnAction((ActionEvent event) -> {
 
+            if (toggle) {
+                root.getChildren().removeAll(imageView, button[5], textField, spinner, checkBox);
+                toggle = false;
+            } else {
+                root.getChildren().addAll(imageView, button[5], textField, spinner, checkBox);
+                toggle = true;
+            }
         });
+
+        // CONFIRM BUTTON
+        button[5].setText("CONFIRM");
+        button[5].setRotate(-3.5);
+        button[5].setOnAction((ActionEvent event) -> {
+            task.setLabel(textField.getText());
+            task.setDuration(spinner.getValue());
+            task.setAlarmOn(checkBox.isSelected());
+            // sysout for testing
+            System.out.println();
+            System.out.println("Task Label\t: " + task.getLabel());
+            System.out.println("Task Duration\t: " + task.getDuration() + " min");
+            System.out.println("Enable Alarm\t: " + task.isAlarmOn());
+            root.getChildren().removeAll(imageView, button[5], textField, spinner, checkBox);
+            toggle = false;
+            textField.setText("");
+        });
+        root.getChildren().remove(button[5]);
+
+        // UPDATE CLOCK AND MUSIC TITLE
+        Thread timerThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(100); // 0.1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> {
+                    label[0].setText(LocalTime.now().format(dtf));
+                    if (music.isPlaying() && (label[1].getText() != music.title())) {
+                        label[1].setText(music.title());
+                    }
+                });
+            }
+        });
+        timerThread.start();
 
     }
 
@@ -163,16 +229,16 @@ public class GUI extends Application {
      * Method to add button with position, size and ID.
      * 
      * @param btn : Button variable
-     * @param xc  : x-coordinate for button
-     * @param yc  : y-coordinate for button
-     * @param xd  : x-dimension for size
-     * @param yd  : y-dimension for size
+     * @param x   : x-coordinate for button
+     * @param y   : y-coordinate for button
+     * @param X   : x-dimension for size
+     * @param Y   : y-dimension for size
      * @param id  : ID for .css
      */
-    void addButton(Button btn, double xc, double yc, double xd, double yd, String id) {
-        btn.setLayoutX(xc);
-        btn.setLayoutY(yc);
-        btn.setPrefSize(xd, yd);
+    void addButton(Button btn, double x, double y, double X, double Y, String id) {
+        btn.setLayoutX(x);
+        btn.setLayoutY(y);
+        btn.setPrefSize(X, Y);
         btn.setId(id);
         root.getChildren().add(btn);
     }
