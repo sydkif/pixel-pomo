@@ -2,8 +2,12 @@ package test2Package;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -50,6 +54,7 @@ public class GUI extends Application {
     private boolean toggle;
     private Image image;
     private ImageView imageView;
+    Timer timer = new Timer();
 
     public void initUI(Stage stage) {
 
@@ -159,6 +164,21 @@ public class GUI extends Application {
             label[2].setText(task.getLabel() + ", " + task.getDuration() + " minute(s)");
 
             // TODO Add start timer
+            timer.scheduleAtFixedRate(new TimerTask(){
+                int temp = task.getDuration();
+                public void run(){
+                if(temp == 0)
+                    timer.cancel();
+                else{
+                    Platform.runLater(new Runnable(){
+                        public void run(){
+                            label[2].setText(task.getLabel() + ", " + String.valueOf(temp) + " minute(s)");
+                        }
+                    });
+                    temp--;                    
+                }
+            }
+            }, 1000, 1000); //Timer is now in seconds, change 60000 to change to minutes
 
             System.out.println();
             System.out.println("Task Label\t: " + task.getLabel());
@@ -168,6 +188,7 @@ public class GUI extends Application {
             toggle = false;
             textField.setText("");
         });
+
         root.getChildren().remove(button[5]);
 
         // TASK PAPER PROPERTIES
@@ -230,6 +251,7 @@ public class GUI extends Application {
             }
         });
     }
+    
 
     /**
      * Method to add button with position, size and ID.
@@ -295,3 +317,4 @@ public class GUI extends Application {
     }
 
 }
+
