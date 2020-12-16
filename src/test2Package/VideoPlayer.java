@@ -6,8 +6,8 @@ import javafx.scene.media.MediaPlayer;
 
 public class VideoPlayer extends MediaLibrary {
 
-    public static int NORMAL = 0;
-    public static int RAIN = 1;
+    public static int NORMAL = 1;
+    public static int RAIN = 0;
     private int type;
     public Media media;
     public MediaPlayer player;
