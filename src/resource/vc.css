@@ -1,0 +1,151 @@
+@font-face {
+    font-family: "FFF Forward";
+    src        : url('font/FFFFORWA.TTF'),
+}
+
+
+
+#root {
+    -fx-background-color: rgb(52, 58, 93);
+}
+
+#view {
+    -fx-effect: innershadow(three-pass-box, rgb(52, 58, 93), 127, 0.95, 0, 0);
+}
+
+
+
+#label-clock {
+    -fx-text-fill  : rgb(246, 239, 230);
+    -fx-font-family: "FFF Forward";
+    -fx-font-size  : 24px;
+    -fx-effect     : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#label-text {
+    -fx-text-fill  : rgb(246, 239, 230);
+    -fx-font-family: 'FFF Forward';
+    -fx-font-size  : 15px;
+    -fx-effect     : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#label-time {
+    -fx-text-fill  : rgb(88, 88, 88);
+    -fx-font-family: 'FFF Forward';
+    -fx-font-size  : 15px;
+    /* -fx-effect     : dropshadow(three-pass-box, black, 1, 1, 1, 1); */
+}
+
+#button-ambient {
+    -fx-background-color   : rgb(162, 136, 135);
+    -fx-background-image   : url('icon/vc/rain.png');
+    -fx-background-size    : 32px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-effect             : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#button-ambient:hover {
+    -fx-background-color: rgb(145, 120, 120);
+}
+
+#button-music {
+    -fx-background-color   : rgb(162, 136, 135);
+    -fx-background-image   : url('icon/vc/music.png');
+    -fx-background-size    : 32px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-effect             : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#button-music:hover {
+    -fx-background-color: rgb(145, 120, 120);
+}
+
+#button-next {
+    -fx-background-color   : rgb(162, 136, 135);
+    -fx-background-image   : url('icon/vc/next.png');
+    -fx-background-size    : 16px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-effect             : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#button-next:pressed {
+    -fx-opacity: 0.5;
+}
+
+#button-next:hover {
+    -fx-background-color: rgb(145, 120, 120);
+}
+
+#button-task {
+    -fx-background-color   : rgb(162, 136, 135);
+    -fx-background-image   : url('icon/vc/task.png');
+    -fx-background-size    : 32px;
+    -fx-background-repeat  : no-repeat;
+    -fx-background-position: 50%;
+    -fx-effect             : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#button-task:hover {
+    -fx-background-color: rgb(145, 120, 120);
+}
+
+#button-task:pressed {
+    -fx-opacity: 0.5;
+}
+
+#button-confirm {
+    -fx-font-family     : "FFF Forward";
+    -fx-font-size       : 16;
+    -fx-text-fill       : white;
+    -fx-background-color: rgb(171, 205, 255);
+    -fx-effect          : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#button-confirm:hover {
+    -fx-background-color: rgb(155, 195, 255);
+}
+
+#button-confirm:pressed {
+    -fx-background-color: rgb(255, 143, 143);
+}
+
+#button-stop {
+    -fx-font-family     : "FFF Forward";
+    -fx-font-size       : 16;
+    -fx-text-fill       : black;
+    -fx-background-color: rgb(255, 110, 110);
+    -fx-effect          : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#button-stop:hover {
+    -fx-background-color: rgb(255, 88, 88);
+}
+
+#button-stop:pressed {
+    -fx-background-color: rgb(255, 143, 143);
+}
+
+#my-slider .thumb {
+    -fx-background-color: rgb(246, 239, 230);
+    -fx-effect          : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#my-slider .track {
+    -fx-background-color: rgb(162, 136, 135);
+    -fx-effect          : dropshadow(three-pass-box, black, 1, 1, 1, 1);
+}
+
+#my-slider:hover .thumb {
+    -fx-background-color: rgb(219, 213, 204);
+}
+
+#checkbox .box .mark {
+    -fx-padding: 13px;
+}
+
+#text-fff {
+    -fx-font-family: "FFF Forward";
+}
