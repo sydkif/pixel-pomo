@@ -10,6 +10,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import org.ini4j.Ini;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -35,20 +38,25 @@ import javafx.stage.WindowEvent;
  * MainGUI class for the whole applications
  */
 public class MainGUI extends Application {
+    
+    /*
+     * private static String user_name = System.getProperty("user.name"); private
+     * File file = new File("C:/Users/" + user_name + "/Music/PixelPomoPlaylist");
+     * private File[] list_file = file.listFiles(); boolean dirCreated =
+     * file.mkdir();
+     */
 
-    private static String user_name = System.getProperty("user.name");
-    private File file = new File("C:/Users/" + user_name + "/Music/PixelPomoPlaylist");
-    private File[] list_file = file.listFiles();
-    boolean dirCreated = file.mkdir();
+    private File config = new File("config.ini");
+    private Ini ini;
+
     public static String AMBIENT = "src/resource/sound/ambient/"; // Default location of ambient sound file
-    public static String MUSIC = "C:/Users/" + user_name + "/Music/PixelPomoPlaylist/"; // Music playlist path
+    public static String MUSIC = ""; // Music playlist path
     public static String ALARM = "src/resource/sound/alarm/"; // Default location of alarm sound file
     public static String VIDEO = "src/resource/video/"; // Default location of background video file
     private Pane root = new Pane(); // Create a layout for the application
     private Scene scene = new Scene(root, 640, 360); // Create a window for the application with 640x360 resolution
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); // Create a 24hrs time format
     private AudioPlayer ambient = new AudioPlayer(AMBIENT, AudioPlayer.AMBIENT); // Audio player for ambient
-    private AudioPlayer music = new AudioPlayer(MUSIC, AudioPlayer.MUSIC); // Audio player for music
     private AudioPlayer alarm = new AudioPlayer(ALARM, AudioPlayer.ALARM); // Audio player for alarm
     private VideoPlayer norm_bg = new VideoPlayer(VIDEO, VideoPlayer.NORMAL); // Video (background) player for normal
     private VideoPlayer rain_bg = new VideoPlayer(VIDEO, VideoPlayer.RAIN); // Video (background) player for raining
@@ -66,6 +74,22 @@ public class MainGUI extends Application {
     private ImageView imageView; // Viewer for the image
 
     public void initUI(Stage stage) {
+
+        try {
+            ini = new Ini(config);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        System.out.println(ini.get("music", "path"));
+        String configured_path = ini.get("music", "path");
+        MUSIC = configured_path + "/";
+
+        File file = new File(ini.get("music", "path"));
+        File[] list_file = file.listFiles();
+        boolean dirCreated = file.mkdir();
+
+        AudioPlayer music = new AudioPlayer(MUSIC, AudioPlayer.MUSIC); // Audio player for music
 
         // INITIAL SETUP
         rain_bg.play(); // Play both background video at start
@@ -96,9 +120,7 @@ public class MainGUI extends Application {
         }
 
         // ADD LABELS (label[x], x-pos, y-pos, min-width, css-id)
-        for (
-
-                int x = 0; x < label.length; x++)
+        for (int x = 0; x < label.length; x++)
             label[x] = new Label();
 
         addLabel(label[0], 530, 25, 60, "label-clock"); // Clock label

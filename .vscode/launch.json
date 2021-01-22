@@ -10,6 +10,14 @@
             "request": "launch",
             "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
             "mainClass": "MainGUI",
+            "projectName": "pixel-pomo_c58d2df0"
+        },
+        {
+            "type": "java",
+            "name": "Launch MainGUI",
+            "request": "launch",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.media",
+            "mainClass": "MainGUI",
             "projectName": "BIC20904-Project_50485f7"
         },
         {
